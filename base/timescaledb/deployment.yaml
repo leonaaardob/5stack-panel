@@ -35,9 +35,13 @@ spec:
           envFrom:
             - secretRef:
                 name: timescaledb-secrets
-            - configMapRef:
-                name: timescaledb-config
           env:
+            - name: POSTGRES_DB
+              value: hasura
+            - name: POSTGRES_USER
+              value: hasura
+            - name: TIMESCALEDB_TELEMETRY
+              value: "off"
             - name: APP_KEY
               valueFrom:
                 secretKeyRef:

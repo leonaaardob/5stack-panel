@@ -25,18 +25,10 @@ configMapGenerator:
     envs:
       - properties/typesense-config.env
     behavior: merge
-  - name: timescaledb-config
-    namespace: 5stack
-    envs:
-      - properties/timescaledb-config.env
   - name: s3-config
     namespace: 5stack
     envs:
       - properties/s3-config.env
-  - name: hasura-config
-    namespace: 5stack
-    envs:
-      - properties/hasura-config.env
 
 replacements:
 - source:

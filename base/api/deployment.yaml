@@ -59,5 +59,3 @@ spec:
                 name: s3-secrets
             - configMapRef:
                 name: s3-config
-            - configMapRef:
-                name: hasura-config

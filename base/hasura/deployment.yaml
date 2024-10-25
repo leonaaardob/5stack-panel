@@ -30,11 +30,29 @@ spec:
           ports:
             - containerPort: 8080
           envFrom:
-            - configMapRef:
-                name: hasura-config 
             - secretRef:
                 name: hasura-secrets  
           env:
+            - name: HASURA_GRAPHQL_CONFIGURED_HEADER_PRECEDENCE
+              value: "true"
+            - name: HASURA_GRAPHQL_DEV_MODE
+              value: "true"
+            - name: HASURA_GRAPHQL_ENABLE_CONSOLE
+              value: "true"
+            - name: HASURA_GRAPHQL_ENABLED_LOG_TYPES
+              value: "startup, http-log, webhook-log, websocket-log, query-log"
+            - name: HASURA_GRAPHQL_STRINGIFY_NUMERIC_TYPES
+              value: "true"
+            - name: HASURA_GRAPHQL_AUTH_HOOK
+              value: "http://api:5585/hasura"
+            - name: HASURA_GRAPHQL_EVENT_HOOK
+              value: "http://api:5585/hasura/events"
+            - name: HASURA_GRAPHQL_ACTIONS_HOOK
+              value: "http://api:5585/hasura/actions"
+            - name: HASURA_GRAPHQL_LOG_LEVEL
+              value: "warn"
+            - name: HASURA_GRAPHQL_ENABLE_TELEMETRY
+              value: "false"
             - name: HASURA_GRAPHQL_METADATA_DIR
               value: /app/hasura/metadata
             - name: HASURA_GRAPHQL_DATABASE_URL
