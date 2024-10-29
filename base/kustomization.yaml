@@ -29,6 +29,10 @@ configMapGenerator:
     namespace: 5stack
     envs:
       - properties/s3-config.env
+  - name: nginx-config
+    namespace: 5stack
+    envs:
+      - properties/nginx-config.env
 
 replacements:
 - source:
@@ -96,6 +100,28 @@ replacements:
       name: typesense
     fieldPaths:
     - spec.rules.0.host
+- source:
+    kind: ConfigMap
+    name: nginx-config
+    fieldPath: data.HTTP_PORT
+  targets:
+  - select:
+      kind: Service
+      name: ingress-nginx-controller
+      namespace: ingress-nginx
+    fieldPaths:
+    - spec.ports.0.port
+- source:
+    kind: ConfigMap
+    name: nginx-config
+    fieldPath: data.HTTPS_PORT
+  targets:
+  - select:
+      kind: Service
+      name: ingress-nginx-controller
+      namespace: ingress-nginx
+    fieldPaths:
+    - spec.ports.1.port
 
 
 secretGenerator:
