@@ -28,7 +28,7 @@ while [ -z "$TAILSCALE_NET_NAME" ]; do
     read TAILSCALE_NET_NAME
 done
 
-update_env_var "base/properties/api-config.env" "TAILSCALE_NET_NAME" "$TAILSCALE_NODE_IP"
+update_env_var "base/properties/api-config.env" "TAILSCALE_NET_NAME" "$TAILSCALE_NET_NAME"
 
 
 echo -e "\033[1;31mCreate an OAuth Client with the \`devices\` with write access from https://login.tailscale.com/admin/settings/oauth\033[0m"
