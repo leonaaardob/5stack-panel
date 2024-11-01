@@ -14,4 +14,4 @@ A clear and concise description of what the bug is.
 - OS: [e.g. iOS, Windows 10]
 
 ## Debug Log
-Run the debug script and upload the debug file. `./debug.sh` [read the docs here]()
+Run the debug script and upload the debug file. `./debug.sh`, view the docs https://docs.5stack.gg/install/debugging
