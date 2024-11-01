@@ -3,32 +3,32 @@
 source setup-env.sh "$@"
 
 namespace="5stack"
+debug_file="debug_output_$(date +%Y%m%d_%H%M%S).txt"
 
-
-echo "Checking pod status and restarts in namespace $namespace..."
-echo "---------------------------------------"
+echo "Checking pod status and restarts in namespace $namespace..." | tee -a "$debug_file"
+echo "---------------------------------------" | tee -a "$debug_file"
 
 # Get all pods in the namespace
 kubectl --kubeconfig=$KUBECONFIG get pods -n "$namespace" --no-headers | while read -r pod; do
     pod_name=$(echo "$pod" | awk '{print $1}')
     restarts=$(echo "$pod" | awk '{print $4}')
     
-    echo "Pod: $pod_name"
-    echo "Total restarts: $restarts"
+    echo "Pod: $pod_name" | tee -a "$debug_file"
+    echo "Total restarts: $restarts" | tee -a "$debug_file"
     
     if [ "$restarts" -gt 0 ]; then
-        echo "Last restart reason:"
-        kubectl --kubeconfig=$KUBECONFIG get pod "$pod_name" -n "$namespace" -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'
-        echo -e "\n"
+        echo "Last restart reason:" | tee -a "$debug_file"
+        kubectl --kubeconfig=$KUBECONFIG get pod "$pod_name" -n "$namespace" -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}' | tee -a "$debug_file"
+        echo -e "\n" | tee -a "$debug_file"
         
-        kubectl --kubeconfig=$KUBECONFIG logs "$pod_name" -n "$namespace" --tail=100
+        kubectl --kubeconfig=$KUBECONFIG logs "$pod_name" -n "$namespace" --tail=100 | tee -a "$debug_file"
     fi
     
-    echo "---------------------------------------"
+    echo "---------------------------------------" | tee -a "$debug_file"
 done
 
-echo "Checking certificates in namespace $namespace..."
-echo "---------------------------------------"
+echo "Checking certificates in namespace $namespace..." | tee -a "$debug_file"
+echo "---------------------------------------" | tee -a "$debug_file"
 
 # Loop through all certificates in all namespaces
 for cert in $(kubectl --kubeconfig=$KUBECONFIG get certificates -A -o custom-columns=NAME:.metadata.name --no-headers | awk '{print $1}'); do
@@ -39,15 +39,15 @@ for cert in $(kubectl --kubeconfig=$KUBECONFIG get certificates -A -o custom-col
 
   # If the certificate is valid, skip to the next
   if [[ "$status" == "True" ]]; then
-    echo "Certificate $name in namespace $namespace is valid."
+    echo "Certificate $name in namespace $namespace is valid." | tee -a "$debug_file"
   else
-    echo "Certificate $name in namespace $namespace is not valid. Fetching details..."
+    echo "Certificate $name in namespace $namespace is not valid. Fetching details..." | tee -a "$debug_file"
 
     # Get details of the certificate
-    kubectl --kubeconfig=$KUBECONFIG describe certificate "$name" -n "$namespace"
+    kubectl --kubeconfig=$KUBECONFIG describe certificate "$name" -n "$namespace" | tee -a "$debug_file"
 
     # Find associated challenges for this certificate
-    echo "Checking challenges for certificate $name..."
+    echo "Checking challenges for certificate $name..." | tee -a "$debug_file"
 
     # Get all challenges in the same namespace and filter by the certificate name
     kubectl --kubeconfig=$KUBECONFIG get challenges -n "$namespace" --no-headers | grep "$name" | while read -r challenge; do
@@ -58,13 +58,15 @@ for cert in $(kubectl --kubeconfig=$KUBECONFIG get certificates -A -o custom-col
 
       # Only fetch details if the challenge is not valid
       if [[ "$challenge_status" != "valid" ]]; then
-        echo "Challenge $challenge_name for certificate $name is not valid. Fetching details..."
-        kubectl --kubeconfig=$KUBECONFIGdescribe challenge "$challenge_name" -n "$namespace"
+        echo "Challenge $challenge_name for certificate $name is not valid. Fetching details..." | tee -a "$debug_file"
+        kubectl --kubeconfig=$KUBECONFIG describe challenge "$challenge_name" -n "$namespace" | tee -a "$debug_file"
       else
-        echo "Challenge $challenge_name for certificate $name is valid."
+        echo "Challenge $challenge_name for certificate $name is valid." | tee -a "$debug_file"
       fi
     done
   fi
 
-  echo "---------------------------------------"
+  echo "---------------------------------------" | tee -a "$debug_file"
 done
+
+echo -e "\033[32mDebug log saved to: $debug_file\033[0m"
