@@ -39,8 +39,6 @@ spec:
               value: "true"
             - name: HASURA_GRAPHQL_ENABLE_CONSOLE
               value: "true"
-            - name: HASURA_GRAPHQL_ENABLED_LOG_TYPES
-              value: "startup, http-log, webhook-log, websocket-log, query-log"
             - name: HASURA_GRAPHQL_STRINGIFY_NUMERIC_TYPES
               value: "true"
             - name: HASURA_GRAPHQL_AUTH_HOOK
