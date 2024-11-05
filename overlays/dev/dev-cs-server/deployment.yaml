@@ -58,6 +58,8 @@ spec:
               mountPath: /serverdata/serverfiles
             - name: demos
               mountPath: /opt/demos
+            - name: custom-plugins
+              mountPath: /opt/custom-plugins
             - name: dev
               mountPath: /opt/dev
             
@@ -73,6 +75,10 @@ spec:
         - name: demos
           hostPath:
             path: /opt/5stack/demos
+            type: Directory
+        - name: custom-plugins
+          hostPath:
+            path: /opt/5stack/custom-plugins
             type: Directory
         - name: dev
           hostPath:
