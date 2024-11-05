@@ -13,6 +13,7 @@ mkdir -p /opt/5stack/serverfiles
 mkdir -p /opt/5stack/timescaledb
 mkdir -p /opt/5stack/typesense
 mkdir -p /opt/5stack/minio
+mkdir -p /opt/5stack/custom-plugins
 
 echo "Environment files setup complete"
 
