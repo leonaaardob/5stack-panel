@@ -16,8 +16,6 @@ while [ -z "$TAILSCALE_AUTH_KEY" ]; do
     read TAILSCALE_AUTH_KEY
 done
 
-update_env_var "base/secrets/tailscale-secrets.env" "TAILSCALE_AUTH_KEY" "$TAILSCALE_AUTH_KEY"
-
 curl -sfL https://get.k3s.io | sh -s - --disable=traefik --vpn-auth="name=tailscale,joinKey=${TAILSCALE_AUTH_KEY}";
 
 
