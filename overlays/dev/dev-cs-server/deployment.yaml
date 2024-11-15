@@ -48,9 +48,6 @@ spec:
               value: -maxplayers 13
             - name: ALLOW_BOTS
               value: "true"
-          resources:
-            limits:
-              memory: 10Gi
           volumeMounts:
             - name: steamcmd
               mountPath: /serverdata/steamcmd

@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - ../../base
   - dev-cs-server
+  - dev-game-stream
   - game-server-node-connector
