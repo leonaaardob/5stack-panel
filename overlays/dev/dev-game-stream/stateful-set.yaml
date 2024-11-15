@@ -32,11 +32,9 @@ spec:
         image: josh5/steam-headless:latest
         resources:
           requests:
-            memory: "2G"
-            cpu: "2"
-          limits:
-            memory: "10G"
+            memory: "4"
             cpu: "4"
+          limits:
             nvidia.com/gpu: 1
         ports:
         - containerPort: 8083
