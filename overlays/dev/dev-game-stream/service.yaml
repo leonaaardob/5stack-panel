@@ -5,10 +5,15 @@ metadata:
   namespace: 5stack
 spec:
   ports:
-    - name: http
-      port: 8080
+    - name: vnc
+      port: 8083
       protocol: TCP
-      targetPort: 8080
+      targetPort: 8083
+    - name: hud
+      port: 31982
+      protocol: TCP
+      targetPort: 31982
+      
   selector:
     app: dev-game-stream
   type: NodePort
