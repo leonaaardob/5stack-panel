@@ -29,7 +29,7 @@ done
 update_env_var "base/properties/api-config.env" "TAILSCALE_NET_NAME" "$TAILSCALE_NET_NAME"
 
 
-echo -e "\033[1;31mCreate an OAuth Client with the \`devices\` with write access from https://login.tailscale.com/admin/settings/oauth\033[0m"
+echo -e "\033[1;31mCreate an OAuth Client with the Auth Keys (\`auth_keys\`) scope with write access from https://login.tailscale.com/admin/settings/oauth\033[0m"
 
 echo -e "\033[1;36mEnter your Secret Key from the step above:\033[0m"
 read TAILSCALE_SECRET_ID
