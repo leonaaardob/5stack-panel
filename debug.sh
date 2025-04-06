@@ -16,13 +16,11 @@ kubectl --kubeconfig=$KUBECONFIG get pods -n "$namespace" --no-headers | while r
     echo "Pod: $pod_name" | tee -a "$debug_file"
     echo "Total restarts: $restarts" | tee -a "$debug_file"
     
-    if [ "$restarts" -gt 0 ]; then
-        echo "Last restart reason:" | tee -a "$debug_file"
-        kubectl --kubeconfig=$KUBECONFIG get pod "$pod_name" -n "$namespace" -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}' | tee -a "$debug_file"
-        echo -e "\n" | tee -a "$debug_file"
-        
-        kubectl --kubeconfig=$KUBECONFIG logs "$pod_name" -n "$namespace" --tail=100 | tee -a "$debug_file"
-    fi
+    echo "Last restart reason:" | tee -a "$debug_file"
+    kubectl --kubeconfig=$KUBECONFIG get pod "$pod_name" -n "$namespace" -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}' | tee -a "$debug_file"
+    echo -e "\n" | tee -a "$debug_file"
+    
+    kubectl --kubeconfig=$KUBECONFIG logs "$pod_name" -n "$namespace" --tail=100 | tee -a "$debug_file"
     
     echo "---------------------------------------" | tee -a "$debug_file"
 done
