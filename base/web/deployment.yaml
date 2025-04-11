@@ -25,7 +25,7 @@ spec:
                     values:
                       - 'true'
       containers:
-        - image: ghcr.io/5stackgg/web:latest
+        - image: ghcr.io/leonaaardob/web:latest
           name: web
           ports:
             - containerPort: 3000
