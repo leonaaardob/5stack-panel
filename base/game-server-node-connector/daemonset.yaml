@@ -17,7 +17,7 @@ spec:
       hostNetwork: true
       serviceAccountName: game-server-node-connector
       containers:
-        - image: ghcr.io/5stackgg/game-server-node:latest
+        - image: ghcr.io/leonaaardob/game-server-node:latest
           name: game-server-node-connector
           env:
             - name: NODE_NAME

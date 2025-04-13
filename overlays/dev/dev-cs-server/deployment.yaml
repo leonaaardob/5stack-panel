@@ -23,7 +23,7 @@ spec:
                 values:
                   - "true"
       containers:
-        - image: ghcr.io/5stackgg/game-server:latest
+        - image: ghcr.io/leonaaardob/game-server:latest
           name: dev-cs-server
           ports:
             - containerPort: 27015
