@@ -51,10 +51,6 @@ if [ "$DEBUG" = true ]; then
     echo "REVERSE_PROXY: $REVERSE_PROXY"
 fi
 
-exit 0
-
-
-
 ask_reverse_proxy() {
     while true; do
         read -p "Are you using a reverse proxy? (http://docs.5stack.gg/install/reverse-proxy) (y/n): " use_reverse_proxy
