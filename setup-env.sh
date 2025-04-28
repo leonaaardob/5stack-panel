@@ -6,6 +6,7 @@ fi
 
 DEBUG=false
 FIVE_STACK_ENV_SETUP=true
+REVERSE_PROXY=""
 
 if [ -z "$KUBECONFIG" ]; then
     KUBECONFIG="/etc/rancher/k3s/k3s.yaml"
@@ -18,19 +19,6 @@ then
 fi
 
 
-REVERSE_PROXY=false
-while true; do
-    read -p "Are you using a reverse proxy? (http://docs.5stack.gg/install/reverse-proxy) (y/n): " use_reverse_proxy
-    if [ "$use_reverse_proxy" = "y" ] || [ "$use_reverse_proxy" = "n" ]; then
-        break
-    fi
-    echo "Please enter 'y' or 'n'"
-done
-
-if [ "$use_reverse_proxy" = "y" ]; then
-    REVERSE_PROXY=true
-fi
-
 while [[ $# -gt 0 ]]; do
     case $1 in
         --kubeconfig)
@@ -41,12 +29,47 @@ while [[ $# -gt 0 ]]; do
             DEBUG=true
             shift
             ;;
+        --reverse-proxy=*)
+            REVERSE_PROXY="${1#*=}"
+            if [ "$REVERSE_PROXY" = "0" ] || [ "$REVERSE_PROXY" = "n" ]; then
+                REVERSE_PROXY=false
+            else
+                REVERSE_PROXY=true
+            fi
+            shift
+            ;;
         *)
             echo "Unknown option: $1"
             exit 1
             ;;
     esac
 done
+
+if [ "$DEBUG" = true ]; then
+    echo "Debug mode enabled"
+    echo "KUBECONFIG: $KUBECONFIG"
+    echo "REVERSE_PROXY: $REVERSE_PROXY"
+fi
+
+exit 0
+
+
+
+ask_reverse_proxy() {
+    while true; do
+        read -p "Are you using a reverse proxy? (http://docs.5stack.gg/install/reverse-proxy) (y/n): " use_reverse_proxy
+        if [ "$use_reverse_proxy" = "y" ] || [ "$use_reverse_proxy" = "n" ]; then
+            break
+        fi
+        echo "Please enter 'y' or 'n'"
+    done
+
+    if [ "$use_reverse_proxy" = "y" ]; then
+        REVERSE_PROXY=true
+    else
+        REVERSE_PROXY=false
+    fi
+}
 
 update_env_var() {
     local file=$1
@@ -67,6 +90,10 @@ output_redirect() {
         "$@" >/dev/null
     fi
 }
+
+if [ -z "$REVERSE_PROXY" ]; then
+    ask_reverse_proxy   
+fi
 
 for file in base/secrets/*.env.example; do
     env_file="${file%.example}"
