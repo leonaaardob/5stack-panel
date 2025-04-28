@@ -131,8 +131,9 @@ if [ -n "$POSTGRES_CONNECTION_STRING" ]; then
         echo "POSTGRES_CONNECTION_STRING=$POSTGRES_CONNECTION_STRING" >> base/secrets/timescaledb-secrets.env
     fi
 fi
-
-K3S_TOKEN=$(cat /var/lib/rancher/k3s/server/node-token)
+if [ -f "/var/lib/rancher/k3s/server/node-token" ]; then
+    K3S_TOKEN=$(cat /var/lib/rancher/k3s/server/node-token)
+fi
 
 if [ -n "$K3S_TOKEN" ]; then
     if grep -q "^K3S_TOKEN=" base/secrets/api-secrets.env; then
