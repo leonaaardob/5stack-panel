@@ -5,7 +5,6 @@ if [ -n "$FIVE_STACK_ENV_SETUP" ]; then
 fi
 
 DEBUG=false
-REVERSE_PROXY=false
 FIVE_STACK_ENV_SETUP=true
 
 if [ -z "$KUBECONFIG" ]; then
@@ -19,15 +18,24 @@ then
 fi
 
 
+REVERSE_PROXY=false
+while true; do
+    read -p "Are you using a reverse proxy? (http://docs.5stack.gg/install/reverse-proxy) (y/n): " use_reverse_proxy
+    if [ "$use_reverse_proxy" = "y" ] || [ "$use_reverse_proxy" = "n" ]; then
+        break
+    fi
+    echo "Please enter 'y' or 'n'"
+done
+
+if [ "$use_reverse_proxy" = "y" ]; then
+    REVERSE_PROXY=true
+fi
+
 while [[ $# -gt 0 ]]; do
     case $1 in
         --kubeconfig)
             KUBECONFIG="$2"
             shift 2
-            ;;
-        --reverse-proxy)
-            REVERSE_PROXY=true
-            shift
             ;;
         --debug)
             DEBUG=true
