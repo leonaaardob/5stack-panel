@@ -36,9 +36,15 @@ spec:
           volumeMounts:
             - name: server-files
               mountPath: /serverfiles
+            - name: demos
+              mountPath: /demos
       volumes:
         - name: server-files
           hostPath:
             path: /opt/5stack/serverfiles
+            type: Directory
+        - name: demos
+          hostPath:
+            path: /opt/5stack/demos
             type: Directory
    
