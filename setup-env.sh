@@ -55,18 +55,6 @@ if [ "$DEBUG" = true ]; then
 fi
 
 
-if [ ! -f .5stack-env.config ]; then
-    echo "Saving environment variables to .5stack-env.config";
-
-    # Save environment variables to .5stack-env.config
-    cat > .5stack-env.config << EOF
-REVERSE_PROXY=$REVERSE_PROXY
-KUBECONFIG=$KUBECONFIG
-EOF
-
-    exit 0;
-fi
-
 ask_reverse_proxy() {
     while true; do
         read -p "Are you using a reverse proxy? (http://docs.5stack.gg/install/reverse-proxy) (y/n): " use_reverse_proxy
@@ -105,6 +93,18 @@ output_redirect() {
 
 if [ -z "$REVERSE_PROXY" ]; then
     ask_reverse_proxy   
+fi
+
+if [ ! -f .5stack-env.config ]; then
+    echo "Saving environment variables to .5stack-env.config";
+
+    # Save environment variables to .5stack-env.config
+    cat > .5stack-env.config << EOF
+REVERSE_PROXY=$REVERSE_PROXY
+KUBECONFIG=$KUBECONFIG
+EOF
+
+    exit 0;
 fi
 
 for file in base/secrets/*.env.example; do
