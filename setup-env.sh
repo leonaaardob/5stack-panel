@@ -8,6 +8,11 @@ DEBUG=false
 FIVE_STACK_ENV_SETUP=true
 REVERSE_PROXY=""
 
+# Load environment variables from .5stack-env.config if it exists
+if [ -f .5stack-env.config ]; then
+    source .5stack-env.config
+fi
+
 if [ -z "$KUBECONFIG" ]; then
     KUBECONFIG="/etc/rancher/k3s/k3s.yaml"
 fi
@@ -46,9 +51,20 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [ "$DEBUG" = true ]; then
-    echo "Debug mode enabled"
-    echo "KUBECONFIG: $KUBECONFIG"
-    echo "REVERSE_PROXY: $REVERSE_PROXY"
+    echo "Debug mode enabled (KUBECONFIG: $KUBECONFIG, REVERSE_PROXY: $REVERSE_PROXY)"
+fi
+
+
+if [ ! -f .5stack-env.config ]; then
+    echo "Saving environment variables to .5stack-env.config";
+
+    # Save environment variables to .5stack-env.config
+    cat > .5stack-env.config << EOF
+REVERSE_PROXY=$REVERSE_PROXY
+KUBECONFIG=$KUBECONFIG
+EOF
+
+    exit 0;
 fi
 
 ask_reverse_proxy() {
@@ -218,3 +234,5 @@ echo "MAIL_FROM: $MAIL_FROM"
 echo "S3_CONSOLE_HOST: $S3_CONSOLE_HOST"
 echo "TYPESENSE_HOST: $TYPESENSE_HOST"
 echo "--------------------------------"
+
+
