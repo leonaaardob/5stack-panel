@@ -33,6 +33,11 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
+          envFrom:
+            - secretRef:
+                name: s3-secrets
+            - configMapRef:
+                name: s3-config
           volumeMounts:
             - name: server-files
               mountPath: /serverfiles
