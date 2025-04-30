@@ -35,9 +35,7 @@ spec:
                   fieldPath: spec.nodeName
           envFrom:
             - secretRef:
-                name: s3-secrets
-            - configMapRef:
-                name: s3-config
+                name: hasura-secrets
           volumeMounts:
             - name: server-files
               mountPath: /serverfiles
