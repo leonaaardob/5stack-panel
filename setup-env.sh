@@ -54,7 +54,6 @@ if [ "$DEBUG" = true ]; then
     echo "Debug mode enabled (KUBECONFIG: $KUBECONFIG, REVERSE_PROXY: $REVERSE_PROXY)"
 fi
 
-
 ask_reverse_proxy() {
     while true; do
         read -p "Are you using a reverse proxy? (http://docs.5stack.gg/install/reverse-proxy) (y/n): " use_reverse_proxy
@@ -103,8 +102,6 @@ if [ ! -f .5stack-env.config ]; then
 REVERSE_PROXY=$REVERSE_PROXY
 KUBECONFIG=$KUBECONFIG
 EOF
-
-    exit 0;
 fi
 
 for file in base/secrets/*.env.example; do
