@@ -65,3 +65,8 @@ spec:
                 secretKeyRef:
                   name: typesense-secrets
                   key: TYPESENSE_API_KEY
+            - name: STEAM_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: steam-secrets
+                  key: STEAM_API_KEY
