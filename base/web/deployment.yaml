@@ -69,4 +69,4 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: steam-secrets
-                  key: STEAM_API_KEY
+                  key: STEAM_WEB_API_KEY
