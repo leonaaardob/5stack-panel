@@ -15,6 +15,7 @@ spec:
         app: dev-game-server-node-connector
     spec:
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -36,6 +37,8 @@ spec:
           envFrom:
             - secretRef:
                 name: hasura-secrets
+            - secretRef:
+                name: redis-secrets                
           volumeMounts:
             - name: server-files
               mountPath: /serverfiles

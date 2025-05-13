@@ -15,6 +15,7 @@ spec:
         app: game-server-node-connector
     spec:
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       serviceAccountName: game-server-node-connector
       containers:
         - image: ghcr.io/5stackgg/game-server-node:latest
@@ -27,6 +28,8 @@ spec:
           envFrom:
             - secretRef:
                 name: hasura-secrets
+            - secretRef:
+                name: redis-secrets
           volumeMounts:
             - name: server-files
               mountPath: /serverfiles
