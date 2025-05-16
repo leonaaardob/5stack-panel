@@ -15,6 +15,6 @@ kubectl --kubeconfig=$KUBECONFIG delete deployment typesense -n 5stack  2>/dev/n
 
 GIT_SHA=$(git rev-parse HEAD)
 
-kubectl --kubeconfig=$KUBECONFIG label node $(kubectl --kubeconfig=$KUBECONFIG get nodes --selector='node-role.kubernetes.io/control-plane') 5stack-panel-version=$GIT_SHA --overwrite
+kubectl --kubeconfig=$KUBECONFIG label node $(kubectl --kubeconfig=$KUBECONFIG get nodes --selector='node-role.kubernetes.io/control-plane' -o jsonpath='{.items[0].metadata.name}') 5stack-panel-version=$GIT_SHA --overwrite
 
 echo "5Stack : Updated"
