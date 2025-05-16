@@ -25,13 +25,6 @@ spec:
             pathType: Prefix
           - backend:
               service:
-                name: api
-                port:
-                  number: 5585
-            path: /server
-            pathType: Prefix
-          - backend:
-              service:
                 name: hasura
                 port:
                   number: 8080

@@ -13,4 +13,8 @@ kubectl --kubeconfig=$KUBECONFIG delete deployment minio -n 5stack 2>/dev/null
 kubectl --kubeconfig=$KUBECONFIG delete deployment timescaledb -n 5stack  2>/dev/null
 kubectl --kubeconfig=$KUBECONFIG delete deployment typesense -n 5stack  2>/dev/null
 
+GIT_SHA=$(git rev-parse --short HEAD)
+
+kubectl --kubeconfig=$KUBECONFIG label node $(kubectl --kubeconfig=$KUBECONFIG get nodes --selector='node-role.kubernetes.io/control-plane') 5stack-panel-version=$GIT_SHA --overwrite
+
 echo "5Stack : Updated"
