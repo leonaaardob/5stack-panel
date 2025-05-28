@@ -64,3 +64,5 @@ spec:
                 name: s3-secrets
             - configMapRef:
                 name: s3-config
+            - secretRef:
+                name: faceit-secrets
