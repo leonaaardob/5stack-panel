@@ -11,7 +11,7 @@ configMapGenerator:
   - name: weblate-config
     namespace: 5stack
     envs:
-      - properties/weblate-config.env
+      - config/weblate-config.env
 
 replacements:
 - source:

@@ -23,7 +23,7 @@ configMapGenerator:
   - name: external-secrets-config
     namespace: external-secrets
     envs:
-      - properties/external-secrets-config.env
+      - config/external-secrets-config.env
 
 replacements:
   - source:
