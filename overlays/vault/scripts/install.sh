@@ -9,6 +9,11 @@ source setup-env.sh "$@"
 
 echo "Installing external-secrets..."
 
+if ! command -v helm &> /dev/null; then
+    echo "Error: helm CLI is not installed. Please install it first (https://helm.sh/docs/intro/install/)."
+    exit 1
+fi
+
 helm repo add external-secrets https://charts.external-secrets.io
 helm repo update
 

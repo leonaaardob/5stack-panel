@@ -284,7 +284,7 @@ update_env_var "overlays/local-secrets/steam-secrets.env" "STEAM_WEB_API_KEY" "$
 
 if [ "$VAULT_MANAGER" = true ]; then
     if ! command -v vault &> /dev/null; then
-        echo "Error: vault CLI is not installed. Please install it first."
+        echo "Error: vault CLI is not installed. Please install it first (https://developer.hashicorp.com/vault/install)."
         exit 1
     fi
     
