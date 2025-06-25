@@ -2,7 +2,7 @@
 
 # Check if vault CLI is installed
 if ! command -v vault &> /dev/null; then
-    echo "Error: vault CLI is not installed"
+    echo "Error: vault CLI is not installed. Please install it first (https://developer.hashicorp.com/vault/install)."
     exit 1
 fi
 
